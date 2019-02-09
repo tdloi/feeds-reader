@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Header from './components/Header';
+import ListSites from './components/ListSites';
+
 
 class App extends Component {
   constructor(props) {
@@ -18,6 +20,11 @@ class App extends Component {
     return (
       <div className="App">
         <Header page={this.state.page} onChange={this.changePage} />
+        { this.state.page !== 'hackernews' &&
+          <div>
+            <ListSites />
+          </div>
+        }
       </div>
     );
   }

@@ -21,6 +21,8 @@ class ActionsInputRSS extends React.Component {
           value={this.props.value}
           label="site name"
           margin="normal"
+          name="siteName"
+          onChange={this.props.onChange}
         />
         <TextField
           fullWidth
@@ -28,6 +30,8 @@ class ActionsInputRSS extends React.Component {
           value={this.props.url}
           label="url"
           margin="normal"
+          name="url"
+          onChange={this.props.onChange}
         />
       </form>
     )
@@ -43,6 +47,8 @@ class ActionsInputReddit extends React.Component {
         value={this.props.value}
         label="subreddit"
         margin="normal"
+        name="url"
+        onChange={this.props.onChange}
       />
     )
   }

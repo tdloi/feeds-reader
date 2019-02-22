@@ -40,11 +40,9 @@ class App extends Component {
       <React.Fragment>
         <CssBaseline />
         <Header page={this.state.page} onChange={this.handleChangePage} />
-        { this.state.page !== 'hackernews' &&
-          <section>
-            <ListSites list={this.state.listSites}/>
-          </section>
-        }
+        <section>
+          <ListSites list={this.state.listSites}/>
+        </section>
       </React.Fragment>
     );
   }

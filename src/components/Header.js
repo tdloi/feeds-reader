@@ -28,7 +28,6 @@ class Header extends React.Component {
                 onChange={(e, value) => this.handleChange(value)}
           >
             <Tab value="rss" label="RSS" />
-            <Tab value="hackernews" label="Hacker News" />
             <Tab value="reddit" label="Reddit" />
           </Tabs>
         </AppBar>        

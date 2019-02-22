@@ -21,7 +21,7 @@ class ActionsInputRSS extends React.Component {
           value={this.props.value}
           label="site name"
           margin="normal"
-          name="siteName"
+          name="name"
           onChange={this.props.onChange}
         />
         <TextField

@@ -19,15 +19,15 @@ const styles = theme => ({
 });
 
 function ListSites(props) {
-  const { classes, sites } = props;
+  const { classes, list } = props;
   return (
     <div className={classes.root}>
-      { sites === undefined ? 
+      { list.length === 0 ? 
         <div className={classes.emptyItem}>No Items</div>
       :
       <List>
-        {sites.map((item) =>
-          <ListSitesItem key={item} value={item} />
+        {list.map((site) =>
+          <ListSitesItem key={site.url} value={site.name} />
         )}
       </List>
       }

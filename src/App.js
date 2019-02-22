@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from './components/Header';
 import ListSites from './components/ListSites';
 
@@ -8,24 +9,43 @@ class App extends Component {
     super(props);
     this.state = {
       page: "rss",
+      listSites: [],
     };
-    this.changePage = this.changePage.bind(this);
+    this.handleChangePage = this.handleChangePage.bind(this);
   }
 
-  changePage(currentPage) {
-    this.setState({page: currentPage})
+  getListSites(page) {
+    let list = localStorage.getItem(page);
+    if (list === null) {
+      return []
+    }
+    return JSON.parse(list);
+  }
+
+  componentDidMount() {
+    this.setState({
+      listSites: this.getListSites(this.state.page),
+    })
+  }
+
+  handleChangePage(currentPage) {
+    this.setState({
+      page: currentPage,
+      listSites: this.getListSites(currentPage),
+    });
   }
 
   render() {
     return (
-      <div className="App">
-        <Header page={this.state.page} onChange={this.changePage} />
+      <React.Fragment>
+        <CssBaseline />
+        <Header page={this.state.page} onChange={this.handleChangePage} />
         { this.state.page !== 'hackernews' &&
-          <div>
-            <ListSites />
-          </div>
+          <section>
+            <ListSites list={this.state.listSites}/>
+          </section>
         }
-      </div>
+      </React.Fragment>
     );
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import DeleteIcon from '@material-ui/icons/Delete';
 import List from '@material-ui/core/List';
 import ListSitesItem from './ListSitesItem';
 
@@ -15,22 +16,28 @@ const styles = theme => ({
   },
   emptyItem: {
     textAlign: 'center',
-  }
+  },
 });
 
 function ListSites(props) {
-  const { classes, list } = props;
+  const { classes, list, isEditing, onClick } = props;
   return (
     <div className={classes.root}>
-      { list.length === 0 ? 
+      {list.length === 0 ? (
         <div className={classes.emptyItem}>No Items</div>
-      :
-      <List>
-        {list.map((site) =>
-          <ListSitesItem key={site.url} value={site.name} />
-        )}
-      </List>
-      }
+      ) : (
+        <List>
+          {list.map(site => (
+            <ListSitesItem
+              key={site.url}
+              value={site.name}
+              displayIcon={isEditing}
+              icon={DeleteIcon}
+              onClick={onClick}
+            />
+          ))}
+        </List>
+      )}
     </div>
   );
 }

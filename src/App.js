@@ -60,7 +60,7 @@ class App extends Component {
 
   handleToggleEdit() {
     this.setState({
-      editing: !this.state.isEditing,
+      isEditing: !this.state.isEditing,
     })
   }
 

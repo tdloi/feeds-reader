@@ -11,7 +11,11 @@ export default function Article({ lists }) {
   return (
     <section>
       {lists.map(article => (
-        <Card key={article.link}>
+        <Card
+          key={article.link}
+          component="article"
+          style={{ margin: '0.5rem' }}
+        >
           <Link target="_blank" rel="noreferrer" href={article.link}>
             <CardHeader title={article.title} subheader={article.pubDate} />
           </Link>

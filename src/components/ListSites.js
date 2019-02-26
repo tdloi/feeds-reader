@@ -7,12 +7,9 @@ import ListSitesItem from './ListSitesItem';
 
 const styles = theme => ({
   root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-    height: '95vh',
-    borderRight: 'solid #757575',
-    marginTop: '0.5rem',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },  
   },
   emptyItem: {
     textAlign: 'center',

@@ -11,9 +11,6 @@ import { RSSInput, RedditInput } from './ActionsInput';
 
 const styles = theme => ({
   root: {
-    maxWidth: 360,
-    borderRight: 'solid #757575',
-    background: theme.palette.background.paper,
     borderBottom: '2px solid #757575',
   },
   buttonGroup: {

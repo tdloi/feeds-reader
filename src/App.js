@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from './components/Header';
 import ListSites from './components/ListSites';
+import { Wrapper, SitesWrapper } from './components/Wrapper';
 import Actions from './components/Actions';
 import Article from './components/Articles';
 import { getListSites, getItemList, fetchData } from './utils';
@@ -92,22 +93,24 @@ class App extends Component {
       <React.Fragment>
         <CssBaseline />
         <Header page={this.state.page} onChange={this.handleChangePage} />
-        <section>
-          <div>
-            <Actions
-              page={this.state.page}
-              onAddSite={site => this.handleAddSite(site)}
-              onToggleEdit={() => this.handleToggleEdit()}
-            />
-            <ListSites
-              onClick={site => this.handleSelectSite(site)}
-              onClickIcon={(e, site) => this.handleDeleteSite(e, site)}
-              list={this.state.listSites}
-              isEditing={this.state.isEditing}
-            />
-          </div>
+        <Wrapper>
+          <SitesWrapper>
+            <div>
+              <Actions
+                page={this.state.page}
+                onAddSite={site => this.handleAddSite(site)}
+                onToggleEdit={() => this.handleToggleEdit()}
+              />
+              <ListSites
+                onClick={site => this.handleSelectSite(site)}
+                onClickIcon={(e, site) => this.handleDeleteSite(e, site)}
+                list={this.state.listSites}
+                isEditing={this.state.isEditing}
+              />
+            </div>
+          </SitesWrapper>
           <Article lists={this.state.listArticles} />
-        </section>
+        </Wrapper>
       </React.Fragment>
     );
   }

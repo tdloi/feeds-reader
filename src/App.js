@@ -3,14 +3,17 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from './components/Header';
 import ListSites from './components/ListSites';
 import Actions from './components/Actions';
-import { getListSites } from './utils';
+import Article from './components/Articles';
+import { getListSites, getItemList, fetchData } from './utils';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       page: 'rss',
+      siteUrl: '',
       listSites: [],
+      listArticles: [],
       isEditing: false, // use to toggle delete icon on ListSite
     };
     this.handleChangePage = this.handleChangePage.bind(this);
@@ -51,6 +54,33 @@ class App extends Component {
     });
   }
 
+  handleSelectSite(site) {
+    const url =
+      this.state.page === 'reddit'
+        ? `https://reddit.com${site.url}.json`
+        : site.url;
+    this.setState(
+      {
+        siteUrl: url,
+      },
+      () => {
+        fetchData(url, this.state.page).then(res => {
+          let list = getItemList(this.state.page, res);
+          if (list === undefined) {
+            list = [];
+          }
+          this.setState({
+            listArticles: list,
+          });
+        });
+      }
+    );
+  }
+
+  handleDeleteSite(e, site) {
+    e.stopPropagation();
+  }
+
   handleToggleEdit() {
     this.setState({
       isEditing: !this.state.isEditing,
@@ -63,15 +93,20 @@ class App extends Component {
         <CssBaseline />
         <Header page={this.state.page} onChange={this.handleChangePage} />
         <section>
-          <Actions
-            page={this.state.page}
-            onAddSite={site => this.handleAddSite(site)}
-            onToggleEdit={() => this.handleToggleEdit()}
-          />
-          <ListSites
-            list={this.state.listSites}
-            isEditing={this.state.isEditing}
-          />
+          <div>
+            <Actions
+              page={this.state.page}
+              onAddSite={site => this.handleAddSite(site)}
+              onToggleEdit={() => this.handleToggleEdit()}
+            />
+            <ListSites
+              onClick={site => this.handleSelectSite(site)}
+              onClickIcon={(e, site) => this.handleDeleteSite(e, site)}
+              list={this.state.listSites}
+              isEditing={this.state.isEditing}
+            />
+          </div>
+          <Article lists={this.state.listArticles} />
         </section>
       </React.Fragment>
     );

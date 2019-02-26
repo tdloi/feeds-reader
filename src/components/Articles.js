@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import {
   Card,
   CardHeader,
@@ -9,24 +9,20 @@ import {
 
 export default function Article({ lists }) {
   return (
-    <Fragment>
+    <section>
       {lists.map(article => (
-        <Link
-          target="_blank"
-          rel="noreferrer"
-          href={article.link}
-          key={article.link}
-        >
-          <Card>
+        <Card key={article.link}>
+          <Link target="_blank" rel="noreferrer" href={article.link}>
             <CardHeader title={article.title} subheader={article.pubDate} />
-            <CardContent>
-              <Typography component="p">
-                {article.description.subString(0, 200)}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Link>
+          </Link>
+          <CardContent>
+            <Typography
+              component="p"
+              dangerouslySetInnerHTML={{ __html: article.description }}
+            />
+          </CardContent>
+        </Card>
       ))}
-    </Fragment>
+    </section>
   );
 }

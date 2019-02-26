@@ -8,10 +8,10 @@ import Divider from '@material-ui/core/Divider';
 function ListSitesItem(props) {
   return (
     <div>
-      <ListItem button>
+      <ListItem button onClick={props.onClick}>
         <ListItemText primary={props.value} />
         {props.displayIcon && (
-          <ListItemIcon onClick={props.onClick}>
+          <ListItemIcon onClick={props.onClickIcon}>
             <IconButton>{<props.icon />}</IconButton>
           </ListItemIcon>
         )}

@@ -20,7 +20,7 @@ const styles = theme => ({
 });
 
 function ListSites(props) {
-  const { classes, list, isEditing, onClick } = props;
+  const { classes, list, isEditing, onClick, onClickIcon } = props;
   return (
     <div className={classes.root}>
       {list.length === 0 ? (
@@ -33,7 +33,8 @@ function ListSites(props) {
               value={site.name}
               displayIcon={isEditing}
               icon={DeleteIcon}
-              onClick={onClick}
+              onClick={() => onClick(site)}
+              onClickIcon={() => onClickIcon(site)}
             />
           ))}
         </List>

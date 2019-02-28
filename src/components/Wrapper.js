@@ -5,14 +5,13 @@ import { PropTypes } from 'prop-types';
 const sitesWrapperStyle = theme => ({
   root: {
     [theme.breakpoints.down('sm')]: {
-      width: '100%',
+      minWidth: '100%',
     },
     [theme.breakpoints.up('sm')]: {
-      width: 240,
-      height: '100%',
+      minWidth: 240,
     },
     [theme.breakpoints.up('md')]: {
-      width: 360,
+      minWidth: 320,
     },
     backgroundColor: theme.palette.background.paper,
     borderRight: 'solid #757575',
@@ -22,7 +21,7 @@ const sitesWrapperStyle = theme => ({
 const wrapperStyle = theme => ({
   root: {
     width: '100%',
-    height: '100%',
+    minHeight: '100%',
     [theme.breakpoints.down('sm')]: {
       display: 'block',
     },

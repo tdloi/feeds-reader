@@ -24,36 +24,43 @@ class App extends Component {
     this.setState({
       listSites: getListSites(this.state.page),
     });
+    window.addEventListener('beforeunload', this.handleSaveSitesToLocalStorage);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener(
+      'beforeunload',
+      this.handleSaveSitesToLocalStorage
+    );
+    this.handleSaveSitesToLocalStorage();
   }
 
   handleChangePage(currentPage) {
+    this.handleSaveSitesToLocalStorage();
     this.setState({
       page: currentPage,
       listSites: getListSites(currentPage),
     });
   }
 
-  handleAddSite(site) {
-    const listSites = localStorage.getItem(this.state.page);
-    if (listSites !== null) {
-      const dupplicate = JSON.parse(listSites).filter(
-        item => item.url === site.url
-      );
-      if (dupplicate.length !== 0) return;
-    }
+  handleAddSite(newSite) {
+    const dupplicate = this.state.listSites.filter(
+      site => site.url === newSite.url
+    );
+    if (dupplicate.length !== 0) return;
 
     // for reddit page, use url of subreddit as name
-    if (!site.name) {
-      site.name = site.url;
+    if (!newSite.name) {
+      newSite.name = newSite.url;
     }
 
-    let list = JSON.parse(listSites) || [];
-    list.push(site);
-    localStorage.setItem(this.state.page, JSON.stringify(list));
     this.setState({
-      listSites: list,
+      listSites: this.state.listSites.concat(newSite),
     });
   }
+
+  handleSaveSitesToLocalStorage = () =>
+    localStorage.setItem(this.state.page, JSON.stringify(this.state.listSites));
 
   handleSelectSite(site) {
     const url =
@@ -78,8 +85,14 @@ class App extends Component {
     );
   }
 
-  handleDeleteSite(e, site) {
+  handleDeleteSite(e, selectedSite) {
     e.stopPropagation();
+    const newListSites = this.state.listSites.filter(
+      site => site.url !== selectedSite.url
+    );
+    this.setState({
+      listSites: newListSites,
+    });
   }
 
   handleToggleEdit() {

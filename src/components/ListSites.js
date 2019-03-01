@@ -31,7 +31,7 @@ function ListSites(props) {
               displayIcon={isEditing}
               icon={DeleteIcon}
               onClick={() => onClick(site)}
-              onClickIcon={() => onClickIcon(site)}
+              onClickIcon={(e) => onClickIcon(e, site)}
             />
           ))}
         </List>

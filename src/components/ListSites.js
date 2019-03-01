@@ -4,15 +4,13 @@ import { withStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import List from '@material-ui/core/List';
 import ListSitesItem from './ListSitesItem';
+import Empty from './Empty';
 
 const styles = theme => ({
   root: {
     [theme.breakpoints.down('sm')]: {
       width: '100%',
-    },  
-  },
-  emptyItem: {
-    textAlign: 'center',
+    },
   },
 });
 
@@ -21,7 +19,7 @@ function ListSites(props) {
   return (
     <div className={classes.root}>
       {list.length === 0 ? (
-        <div className={classes.emptyItem}>No Items</div>
+        <Empty value="No Item" />
       ) : (
         <List>
           {list.map(site => (
@@ -31,7 +29,7 @@ function ListSites(props) {
               displayIcon={isEditing}
               icon={DeleteIcon}
               onClick={() => onClick(site)}
-              onClickIcon={(e) => onClickIcon(e, site)}
+              onClickIcon={e => onClickIcon(e, site)}
             />
           ))}
         </List>

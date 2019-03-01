@@ -16,6 +16,7 @@ class App extends Component {
       listSites: [],
       listArticles: [],
       isEditing: false, // use to toggle delete icon on ListSite
+      isLoadingListArticles: false,
     };
     this.handleChangePage = this.handleChangePage.bind(this);
   }
@@ -70,6 +71,7 @@ class App extends Component {
     this.setState(
       {
         siteUrl: url,
+        isLoadingListArticles: true,
       },
       () => {
         fetchData(url, this.state.page).then(res => {
@@ -79,6 +81,7 @@ class App extends Component {
           }
           this.setState({
             listArticles: list,
+            isLoadingListArticles: false,
           });
         });
       }
@@ -122,7 +125,10 @@ class App extends Component {
               />
             </div>
           </SitesWrapper>
-          <Article lists={this.state.listArticles} />
+          <Article
+            lists={this.state.listArticles}
+            isLoading={this.state.isLoadingListArticles}
+          />
         </Wrapper>
       </React.Fragment>
     );

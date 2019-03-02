@@ -1,9 +1,6 @@
 version: 2
 jobs:
   build:
-    branches:
-      only:
-        - master
     docker:
       - image: circleci/node
     steps:
@@ -25,9 +22,24 @@ jobs:
       - run:
           name: Clean up map files
           command: yarn clean
+      - run:
+          name: Config git
+          command: |
+            git config user.email "$GH_EMAIL"
+            git config user.name "$GH_NAME"
       - add_ssh_keys:
           fingerprints:
             - "fc:74:3f:bd:93:12:0f:97:bf:5c:09:e5:9b:d9:36:6b"
       - run:
           name: Deploy gh-pages
           command: yarn deploy
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
+          context: gh-tdloi

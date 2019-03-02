@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
+    "gh-pages": "^2.0.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-scripts": "2.1.3",
@@ -13,7 +14,9 @@
   "scripts": {
     "analyze": "npx source-map-explorer build/static/js/main.*",
     "start": "react-scripts start",
+    "clean": "find ./build -name '*.map' -delete",
     "build": "react-scripts build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

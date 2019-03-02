@@ -1,0 +1,29 @@
+version: 2
+jobs:
+  build:
+    branches:
+      only:
+        - master
+    docker:
+      - image: circleci/node
+    steps:
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-      
+      - run: 
+          name: Install dependencies
+          command: yarn install
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Clean up map files
+          command: yarn clean
+      - add_ssh_keys:
+          fingerprints:
+            - "fc:74:3f:bd:93:12:0f:97:bf:5c:09:e5:9b:d9:36:6b"
+      - run:
+          name: Deploy gh-pages
+          command: yarn deploy

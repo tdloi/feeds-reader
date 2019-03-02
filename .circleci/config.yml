@@ -20,6 +20,9 @@ jobs:
           paths:
             - node_modules
       - run:
+          name: Build
+          command: yarn build
+      - run:
           name: Clean up map files
           command: yarn clean
       - add_ssh_keys:

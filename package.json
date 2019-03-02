@@ -17,7 +17,6 @@
     "start": "react-scripts start",
     "clean": "find ./build -name '*.map' -delete",
     "build": "react-scripts build",
-    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

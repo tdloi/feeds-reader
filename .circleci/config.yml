@@ -32,13 +32,10 @@ jobs:
             - "fc:74:3f:bd:93:12:0f:97:bf:5c:09:e5:9b:d9:36:6b"
       - run:
           name: Deploy gh-pages
-          command: yarn run gh-pages -d build -m "Auto build from $CIRCLE_SHA1"
+          command: yarn run gh-pages -d build -m "[ci skip] Auto build from $CIRCLE_SHA1"
 workflows:
   version: 2
   deploy:
     jobs:
       - build:
-          filters:
-            branches:
-              only: master
           context: gh-tdloi

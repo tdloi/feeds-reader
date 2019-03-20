@@ -18,7 +18,7 @@ const styles = theme => ({
 class ActionsInputRSS extends React.Component {
   render() {
     return (
-      <form noValidate autoComplete="off">
+      <form noValidate autoComplete="off" onSubmit={e => this.props.onSubmit(e)}>
         <TextField
           fullWidth
           className={this.props.classes.root}
@@ -52,7 +52,7 @@ class ActionsInputRSS extends React.Component {
 class ActionsInputReddit extends React.Component {
   render() {
     return (
-      <form noValidate autoComplete="off">
+      <form noValidate autoComplete="off" onSubmit={e => this.props.onSubmit(e)}>
         <TextField
           fullWidth
           className={this.props.classes.root}

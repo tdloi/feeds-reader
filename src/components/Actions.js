@@ -47,6 +47,7 @@ class Actions extends React.Component {
     this.handleClickButtonNew = this.handleClickButtonNew.bind(this);
     this.handleClickButtonEdit = this.handleClickButtonEdit.bind(this);
     this.validateURL = debounce(this.validateURL, 1000);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   // close form or cancel edit action on changing page
@@ -82,6 +83,12 @@ class Actions extends React.Component {
     }
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    if (this.isButtonNewDisabled()) return;
+    this.handleClickButtonNew();
+  }
+
   handleInputChange(e) {
     this.setState({
       site: {
@@ -90,12 +97,12 @@ class Actions extends React.Component {
       },
       error: null,
       isValid: false,
+      isFetchingURL: true,
     })
     if (e.target.value && e.target.name === 'url') this.validateURL(e.target.value);
   }
 
   validateURL = async (url) => {
-    this.setState({ isFetchingURL: true });
     const fetchUrl = this.props.page === 'reddit'
       ? `https://reddit.com/r/${url}.json`
       : url
@@ -184,6 +191,7 @@ class Actions extends React.Component {
             (this.props.page === 'rss' ? (
               <RSSInput
                 onChange={this.handleInputChange}
+                onSubmit={this.handleSubmit}
                 value={this.state.site.name}
                 url={this.state.site.url}
                 error={this.state.error}
@@ -191,6 +199,7 @@ class Actions extends React.Component {
             ) : (
               <RedditInput
                 onChange={this.handleInputChange}
+                onSubmit={this.handleSubmit}
                 url={this.state.site.url}
                 error={this.state.error}
               />

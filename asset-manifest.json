@@ -1,13 +1,13 @@
 {
   "main.css": "/feeds-reader/static/css/main.d5e1f069.chunk.css",
-  "main.js": "/feeds-reader/static/js/main.2f9ad746.chunk.js",
-  "main.js.map": "/feeds-reader/static/js/main.2f9ad746.chunk.js.map",
+  "main.js": "/feeds-reader/static/js/main.712c114a.chunk.js",
+  "main.js.map": "/feeds-reader/static/js/main.712c114a.chunk.js.map",
   "static/js/1.86771415.chunk.js": "/feeds-reader/static/js/1.86771415.chunk.js",
   "static/js/1.86771415.chunk.js.map": "/feeds-reader/static/js/1.86771415.chunk.js.map",
   "runtime~main.js": "/feeds-reader/static/js/runtime~main.671af91d.js",
   "runtime~main.js.map": "/feeds-reader/static/js/runtime~main.671af91d.js.map",
   "static/css/main.d5e1f069.chunk.css.map": "/feeds-reader/static/css/main.d5e1f069.chunk.css.map",
   "index.html": "/feeds-reader/index.html",
-  "precache-manifest.9e81d851252783862fa3c9ba9624164e.js": "/feeds-reader/precache-manifest.9e81d851252783862fa3c9ba9624164e.js",
+  "precache-manifest.b5c86ba7b1889eece84ab8f0d0f23373.js": "/feeds-reader/precache-manifest.b5c86ba7b1889eece84ab8f0d0f23373.js",
   "service-worker.js": "/feeds-reader/service-worker.js"
 }

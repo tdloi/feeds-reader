@@ -97,9 +97,11 @@ class Actions extends React.Component {
       },
       error: null,
       isValid: false,
-      isFetchingURL: true,
     })
-    if (e.target.value && e.target.name === 'url') this.validateURL(e.target.value);
+    if (e.target.value && e.target.name === 'url') {
+      this.setState({ isFetchingURL: true })
+      this.validateURL(e.target.value);
+    }
   }
 
   validateURL = async (url) => {
@@ -116,7 +118,6 @@ class Actions extends React.Component {
 
     if (isValid) {
       this.setState({
-        error: null,
         isValid: true,
         isFetchingURL: false,
       })

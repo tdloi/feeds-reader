@@ -1,4 +1,4 @@
-import getRssItemList from './rss';
+import getRssItemList, { parseRSSToJSON } from './rss';
 import getRedditItemList from './reddit';
 
 export function getListSites(page) {
@@ -18,18 +18,7 @@ export async function fetchData(url, page) {
     return response.json().catch(err => undefined);
   }
 
-  const { Parser } = await import('xml2js');
-  // parseString does not return value directly
-  // see https://github.com/Leonidas-from-XIV/node-xml2js/issues/380
-  let _result;
-  new Parser({ explicitArray: false }).parseString(
-    await response.text(),
-    (err, result) => {
-      _result = result;
-    }
-  );
-
-  return _result;
+  return parseRSSToJSON(await response.text())
 }
 
 export function getItemList(site, json) {

@@ -66,11 +66,11 @@ class App extends Component {
   handleSelectSite(site) {
     const url =
       this.state.page === 'reddit'
-        ? `https://reddit.com${site.url}.json`
+        ? `https://reddit.com/r/${site.url}.json`
         : site.url;
     this.setState(
       {
-        siteUrl: url,
+        siteUrl: site.url,
         isLoadingListArticles: true,
       },
       () => {

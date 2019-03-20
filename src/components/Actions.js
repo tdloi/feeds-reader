@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { debounce } from 'lodash';
+
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
@@ -8,6 +10,8 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import ActionsButton from './ActionsButton';
 import { RSSInput, RedditInput } from './ActionsInput';
+import { fetchData } from '../utils';
+import { isValidRSS } from '../utils/rss';
 
 const styles = theme => ({
   root: {
@@ -34,11 +38,15 @@ class Actions extends React.Component {
         name: '',
         url: '',
       },
+      error: null,
+      isValidURL: false,  // Valid RSS URL or subreddit is existed
+      isFetchingURL: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleClickButtonNew = this.handleClickButtonNew.bind(this);
     this.handleClickButtonEdit = this.handleClickButtonEdit.bind(this);
+    this.validateURL = debounce(this.validateURL, 1000);
   }
 
   // close form or cancel edit action on changing page
@@ -46,26 +54,21 @@ class Actions extends React.Component {
     if (this.props.page !== prevProps.page) {
       this.setState({
         add: false,
-        site: {
-          name: '',
-          url: '',
-        },
+        site: { name: '', url: '', },
+        error: null,
+        isValidRSS: false,
       });
     }
   }
 
   handleClickButtonNew() {
     if (this.state.add) {
-      // Save
       this.props.onAddSite(this.state.site);
     }
 
     this.setState({
       add: !this.state.add,
-      site: {
-        name: '',
-        url: '',
-      },
+      site: { name: '', url: '', },
     });
   }
 
@@ -85,25 +88,38 @@ class Actions extends React.Component {
         ...this.state.site,
         [e.target.name]: e.target.value || '',
       },
-    });
+      error: null,
+      isValid: false,
+    })
+    if (e.target.value && e.target.name === 'url') this.validateURL(e.target.value);
   }
 
-  renderInput() {
-    if (this.state.add) {
-      if (this.props.page === 'rss')
-        return (
-          <RSSInput
-            onChange={this.handleInputChange}
-            value={this.state.site.name}
-            url={this.state.site.url}
-          />
-        );
-      return (
-        <RedditInput
-          onChange={this.handleInputChange}
-          url={this.state.site.url}
-        />
-      );
+  validateURL = async (url) => {
+    this.setState({ isFetchingURL: true });
+    const fetchUrl = this.props.page === 'reddit'
+      ? `https://reddit.com/r/${url}.json`
+      : url
+    const data = await fetchData(fetchUrl, this.props.page);
+    const isValid = this.props.page === 'reddit'
+      ? data.error !== 404
+      : isValidRSS(data)
+    const errorMessage = this.props.page === 'reddit'
+      ? 'subreddit does not exist'
+      : 'Invalid RSS url'
+
+    if (isValid) {
+      this.setState({
+        error: null,
+        isValid: true,
+        isFetchingURL: false,
+      })
+    }
+    else {
+      this.setState({
+        error: errorMessage,
+        isValid: false,
+        isFetchingURL: false,
+      })
     }
   }
 
@@ -135,6 +151,7 @@ class Actions extends React.Component {
   isButtonNewDisabled() {
     if (this.props.isEditing) return true;
     if (!this.state.add) return;
+    if (!this.state.isValid) return true;
 
     const { name, url } = this.state.site;
     if (this.props.page === 'reddit') {
@@ -157,11 +174,28 @@ class Actions extends React.Component {
             value={buttonNew}
             icon={buttonNewIcon}
             onClick={this.handleClickButtonNew}
+            isLoading={this.state.isFetchingURL}
             disabled={this.isButtonNewDisabled()}
           />
           <ActionsButton {...buttonEdit} onClick={this.handleClickButtonEdit} />
         </div>
-        <div className={classes.input}>{this.renderInput()}</div>
+        <div className={classes.input}>
+          {this.state.add &&
+            (this.props.page === 'rss' ? (
+              <RSSInput
+                onChange={this.handleInputChange}
+                value={this.state.site.name}
+                url={this.state.site.url}
+                error={this.state.error}
+              />
+            ) : (
+              <RedditInput
+                onChange={this.handleInputChange}
+                url={this.state.site.url}
+                error={this.state.error}
+              />
+            ))}
+        </div>
       </div>
     );
   }

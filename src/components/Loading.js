@@ -5,14 +5,20 @@ import { PropTypes } from 'prop-types';
 
 const style = theme => ({
   root: {
+    display: 'flex',
+    justifyContent: 'center',
+    minHeight: '250px',
     margin: 'auto',
   },
+  circle: {
+    margin: 'auto',
+  }
 });
 
 function Loading({ classes }) {
   return (
     <div className={classes.root}>
-      <CircularProgress />
+      <CircularProgress className={classes.circle} />
     </div>
   );
 }

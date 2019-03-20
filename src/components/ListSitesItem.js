@@ -4,6 +4,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
+import { withStyles } from '@material-ui/core'
+
+const style = {
+  icon: {
+    'padding': '2px 5px',
+    'borderRadius': '20%',
+  }
+}
 
 function ListSitesItem(props) {
   return (
@@ -12,7 +20,7 @@ function ListSitesItem(props) {
         <ListItemText primary={props.value} />
         {props.displayIcon && (
           <ListItemIcon onClick={props.onClickIcon}>
-            <IconButton>{<props.icon />}</IconButton>
+            <IconButton className={props.classes.icon}>{<props.icon fontSize="small"/>}</IconButton>
           </ListItemIcon>
         )}
       </ListItem>
@@ -21,4 +29,4 @@ function ListSitesItem(props) {
   );
 }
 
-export default ListSitesItem;
+export default withStyles(style)(ListSitesItem);

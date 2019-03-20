@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core';
 
 const styles = theme => ({
@@ -9,6 +10,9 @@ const styles = theme => ({
   },
   rightIcon: {
     marginLeft: theme.spacing.unit,
+  },
+  progress: {
+    margin: theme.spacing.unit,
   },
 })
 
@@ -25,6 +29,9 @@ class ActionsButton extends React.Component {
         onClick={this.props.onClick}
         className={classes.button}
       >
+        { this.props.isLoading && 
+          <CircularProgress className={classes.progress} size="10px" />
+        }
         {this.props.value}
         <Icon className={classes.rightIcon} /> 
       </Button>

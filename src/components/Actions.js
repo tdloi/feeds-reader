@@ -185,7 +185,11 @@ class Actions extends React.Component {
             isLoading={this.state.isFetchingURL}
             disabled={this.isButtonNewDisabled()}
           />
-          <ActionsButton {...buttonEdit} onClick={this.handleClickButtonEdit} />
+          <ActionsButton
+            {...buttonEdit} 
+            onClick={this.handleClickButtonEdit}
+            disabled={this.props.isListSiteEmpty && !this.props.isEditing && !this.state.add}
+          />
         </div>
         <div className={classes.input}>
           {this.state.add &&

@@ -115,6 +115,7 @@ class App extends Component {
               <Actions
                 page={this.state.page}
                 isEditing={this.state.isEditing}
+                isListSiteEmpty={this.state.listSites.length === 0}
                 onAddSite={site => this.handleAddSite(site)}
                 onToggleEdit={() => this.handleToggleEdit()}
               />
